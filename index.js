@@ -18,47 +18,64 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 // require the command files
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+	const command = require(`./commands/${file}`);
 
-    // set a new item in the "commands" Collection
-    // with the key as the command name and the value as the exported module
-    client.commands.set(command.name, command);
+	// set a new item in the "commands" Collection
+	// with the key as the command name and the value as the exported module
+	client.commands.set(command.name, command);
 }
 
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once('ready', () => {
-    console.log('Ready!');
+	console.log('Ready!');
+});
+
+client.on('guildMemberAdd', member => {
+	const channel = member.guild.channels.cache.find(ch => ch.name === 'test');
+
+	if (!channel) return;
+
+	channel.send(`SALUT GRO BAISEUR, ${member}`);
+});
+
+client.on('guildMemberRemove', member => {
+	const channel = member.guild.channels.cache.find(ch => ch.name === 'test');
+
+	if (!channel) return;
+
+	channel.send(`CASSE TOI GRO PD, ${member}`);
 });
 
 client.on('message', message => {
-    // if message doesn't start with prefix or is sent by a bot, return
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+	// if message doesn't start with prefix or is sent by a bot, return
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    // split the user's message in two blocks, the command and his arguments
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
+	// split the user's message in two blocks, the command and his arguments
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = args.shift().toLowerCase();
 
-    if (!client.commands.has(commandName)) return;
+	if (!client.commands.has(commandName)) return;
 
-    const command = client.commands.get(commandName);
+	const command = client.commands.get(commandName);
 
-    if (command.args && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
 
-        if (command.usage) {
-            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-        }
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
 
-        return message.channel.send(reply);
-    }
+		return message.channel.send(reply);
+	}
 
-    try {
-        command.execute(message, args);
-    } catch (error) {
-        console.error(error);
-        message.reply('there was an error trying to execute that command!');
-    }
+	try {
+		command.execute(message, args);
+	}
+	catch (error) {
+		console.error(error);
+		message.reply('there was an error trying to execute that command!');
+	}
 });
 
 // login to Discord with your app's token
