@@ -28,7 +28,14 @@ for (const file of commandFiles) {
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once('ready', () => {
-	console.log('Ready!');
+	console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setPresence({
+		game: {
+			name:'bip boup',
+			type: 'WATCHING',
+		},
+		status: 'online',
+	}).then(() => console.log('ayaaaa'));
 });
 
 client.on('guildMemberAdd', member => {
