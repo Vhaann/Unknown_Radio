@@ -35,7 +35,7 @@ client.once('ready', () => {
 			type: 'WATCHING',
 		},
 		status: 'online',
-	}).then(() => console.log('ayaaaa'));
+	}).then(botPresence => console.log('My Bot:', botPresence));
 });
 
 client.on('guildMemberAdd', member => {
@@ -54,12 +54,12 @@ client.on('guildMemberRemove', member => {
 	channel.send(`CASSE TOI GRO PD, ${member}`);
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	// if message doesn't start with prefix or is sent by a bot, return
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	// split the user's message in two blocks, the command and his arguments
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const commandName = args.shift().toLowerCase();
 
 	if (!client.commands.has(commandName)) return;
@@ -73,15 +73,15 @@ client.on('message', message => {
 			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
 		}
 
-		return message.channel.send(reply);
+		return await message.channel.send(reply);
 	}
 
 	try {
-		command.execute(message, args);
+		await command.execute(message, args);
 	}
 	catch (error) {
 		console.error(error);
-		message.reply('there was an error trying to execute that command!');
+		await message.reply('there was an error trying to execute that command!');
 	}
 });
 

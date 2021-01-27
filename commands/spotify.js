@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'spotify',
-	description: 'Plays songs from Spotify API',
+	description: 'Get current Spotify playing song',
 	execute(message) {
 		const user = message.mentions.users.first() || message.author;
 		const userActivity = user.presence.activities.find(activity => activity.type === 'LISTENING');
