@@ -13,5 +13,7 @@ module.exports = {
 	usage: '<musicName>',
 	async execute(message, args) {
 		await client.player.play(message, args[0]);
+
+		console.log('Track', args[0]);
 	},
 };
