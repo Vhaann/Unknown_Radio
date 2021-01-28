@@ -4,11 +4,20 @@ const fs = require('fs');
 // require the discord.js module
 const Discord = require('discord.js');
 
+// require discord-player
+const { Player } = require('discord-player');
+
 // require the config.json file
 const { prefix, token } = require('./config.json');
 
 // create a new Discord client
 const client = new Discord.Client();
+
+// Create a new Player (you don't need any API Key)
+const player = new Player(client);
+
+// To easily access the player
+client.player = player;
 
 // create a new Discord client collection "commands", you can access with 'client.commands'
 client.commands = new Discord.Collection();
@@ -36,6 +45,14 @@ client.once('ready', () => {
 		},
 		status: 'online',
 	}).then(botPresence => console.log('My Bot:', botPresence));
+});
+
+// add the trackStart event so when a song will be played this message will be sent
+client.player.on('trackStart', (message, track) => {
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'test');
+
+	console.log(track);
+	channel.send(`Now playing ${track.title}...`);
 });
 
 client.on('guildMemberAdd', member => {

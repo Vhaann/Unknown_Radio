@@ -12,8 +12,6 @@ module.exports = {
 	args: true,
 	usage: '<musicName>',
 	async execute(message, args) {
-		const track = await client.player.play(message.member.voice.channel, args[1], message.member.user.tag);
-
-		message.channel.send(`Currently playing ${track.name}!`);
+		await client.player.play(message, args[0]);
 	},
 };
