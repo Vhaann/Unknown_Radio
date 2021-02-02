@@ -1,10 +1,4 @@
-const Discord = require('discord.js');
-const { Player } = require('discord-player');
-
-const client = new Discord.Client();
-const player = new Player(client);
-
-client.player = player;
+const { client } = require('../index');
 
 module.exports = {
 	name: 'stop',

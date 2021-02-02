@@ -1,10 +1,4 @@
-const Discord = require('discord.js');
-const { Player } = require('discord-player');
-
-const client = new Discord.Client();
-const player = new Player(client);
-
-client.player = player;
+const { client } = require('../index');
 
 module.exports = {
 	name: 'play',
@@ -12,7 +6,7 @@ module.exports = {
 	args: true,
 	usage: '<musicName>',
 	async execute(message, args) {
-		await client.player.play(message, args[0]);
+		await client.player.play(message, args[0], true);
 
 		console.log('Track', args[0]);
 	},

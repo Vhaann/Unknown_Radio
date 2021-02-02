@@ -1,13 +1,13 @@
 const { client } = require('../index');
 
 module.exports = {
-	name: 'pause',
-	description: 'Pause current song',
+	name: 'shuffle',
+	description: 'Shuffle current Queue',
 	async execute(message) {
 		if(!client.player.isPlaying(message)) return ;
 
-		await client.player.pause(message);
+		await client.player.shuffle(message);
 
-		message.channel.send('Paused');
+		message.channel.send('Shuffled');
 	},
 };

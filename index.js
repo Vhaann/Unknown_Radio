@@ -22,6 +22,9 @@ client.player = player;
 // create a new Discord client collection "commands", you can access with 'client.commands'
 client.commands = new Discord.Collection();
 
+// export the client, so you can access it from the command files
+module.exports = { client };
+
 // returns an array with all the filenames with '.js' extension in "commands" dir
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -47,16 +50,24 @@ client.once('ready', () => {
 	}).then(botPresence => console.log('My Bot:', botPresence));
 });
 
-// add the trackStart event so when a song will be played this message will be sent
+// On trackStart send track title in music channel
 client.player.on('trackStart', (message, track) => {
-	const channel = message.guild.channels.cache.find(ch => ch.name === 'test');
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
 
 	console.log(track);
 	channel.send(`Now playing ${track.title}...`);
 });
 
+// On trackAdd send track title in music channel
+client.player.on('trackAdd', (message, queue) => {
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
+
+	console.log(queue);
+	channel.send(`Added ${queue.tracks[queue.tracks.length - 1].title} to the queue`);
+});
+
 client.on('guildMemberAdd', member => {
-	const channel = member.guild.channels.cache.find(ch => ch.name === 'test');
+	const channel = member.guild.channels.cache.find(ch => ch.name === 'général');
 
 	if (!channel) return;
 
@@ -64,7 +75,7 @@ client.on('guildMemberAdd', member => {
 });
 
 client.on('guildMemberRemove', member => {
-	const channel = member.guild.channels.cache.find(ch => ch.name === 'test');
+	const channel = member.guild.channels.cache.find(ch => ch.name === 'général');
 
 	if (!channel) return;
 

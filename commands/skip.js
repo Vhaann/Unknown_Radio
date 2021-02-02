@@ -1,13 +1,13 @@
 const { client } = require('../index');
 
 module.exports = {
-	name: 'pause',
-	description: 'Pause current song',
+	name: 'skip',
+	description: 'Skips playing song',
 	async execute(message) {
 		if(!client.player.isPlaying(message)) return ;
 
-		await client.player.pause(message);
+		await client.player.skip(message);
 
-		message.channel.send('Paused');
+		message.channel.send('Skipped');
 	},
 };
