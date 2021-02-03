@@ -31,7 +31,7 @@ module.exports = {
 				// this signify only the two above fields will be on the same line
 				.addField('Author', trackAuthor, false)
 				// This here sets a clickable link, redirecting to the trackURL, while still showing the URL in ''.
-				.addField('Listen to track', `[\`${trackURL}\`](trackURL)`, false)
+				.addField('Listen to track', trackURL, false)
 				.setFooter(message.member.displayName, message.author.displayAvatarURL())
 				.setTimestamp();
 

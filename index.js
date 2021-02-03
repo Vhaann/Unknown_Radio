@@ -42,9 +42,9 @@ for (const file of commandFiles) {
 client.once('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	client.user.setPresence({
-		game: {
-			name:'bip boup',
-			type: 'WATCHING',
+		activity: {
+			name:'Type !help',
+			type: 'LISTENING',
 		},
 		status: 'online',
 	}).then(botPresence => console.log('My Bot:', botPresence));
@@ -52,10 +52,25 @@ client.once('ready', () => {
 
 // On trackStart send track title in music channel
 client.player.on('trackStart', (message, track) => {
-	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
-
 	console.log(track);
+
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
+	const progressBar = client.player.createProgressBar(message, {
+		timecodes: true,
+	});
+	const progressBarEmbed = new Discord.MessageEmbed()
+		.setTitle(track.title)
+		.setThumbnail(track.thumbnail)
+		.setAuthor(track.author)
+		.setColor(0X1ED760)
+		.setDescription(track.description)
+		.addField('Listening', progressBar)
+		.addField('Listen on Youtube', track.url)
+		.setFooter(track.requestedBy.username, message.author.displayAvatarURL())
+		.setTimestamp();
+
 	channel.send(`Now playing ${track.title}...`);
+	channel.send(progressBarEmbed);
 });
 
 // On trackAdd send track title in music channel
@@ -63,6 +78,7 @@ client.player.on('trackAdd', (message, queue) => {
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
 
 	console.log(queue);
+
 	channel.send(`Added ${queue.tracks[queue.tracks.length - 1].title} to the queue`);
 });
 
@@ -82,7 +98,7 @@ client.on('guildMemberRemove', member => {
 	channel.send(`CASSE TOI GRO PD, ${member}`);
 });
 
-client.on('message', async message => {
+client.on('message', async (message) => {
 	// if message doesn't start with prefix or is sent by a bot, return
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 

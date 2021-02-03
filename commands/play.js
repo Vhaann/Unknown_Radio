@@ -6,8 +6,10 @@ module.exports = {
 	args: true,
 	usage: '<musicName>',
 	async execute(message, args) {
-		await client.player.play(message, args[0], true);
+		const parsedArgs = args.toString();
 
-		console.log('Track', args[0]);
+		await client.player.play(message, parsedArgs, true);
+
+		console.log('Track', parsedArgs);
 	},
 };
