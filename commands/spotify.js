@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const SpotifyIcon = require('../src/svg/spotify-brands.svg');
 
 module.exports = {
 	name: 'spotify',
