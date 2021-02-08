@@ -10,6 +10,9 @@ const { Player } = require('discord-player');
 // require the config.json file
 const { prefix, token } = require('./config.json');
 
+// other imports
+const trackEmbed = require('./components/trackEmbed');
+
 // create a new Discord client
 const client = new Discord.Client();
 
@@ -55,22 +58,9 @@ client.player.on('trackStart', (message, track) => {
 	console.log(track);
 
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
-	const progressBar = client.player.createProgressBar(message, {
-		timecodes: true,
-	});
-	const progressBarEmbed = new Discord.MessageEmbed()
-		.setTitle(track.title)
-		.setThumbnail(track.thumbnail)
-		.setAuthor(track.author)
-		.setColor(0X1ED760)
-		.setDescription(track.description)
-		.addField('Listening', progressBar)
-		.addField('Listen on Youtube', track.url)
-		.setFooter(track.requestedBy.username, message.author.displayAvatarURL())
-		.setTimestamp();
 
 	channel.send(`Now playing ${track.title}...`);
-	channel.send(progressBarEmbed);
+	channel.send(trackEmbed(track, message));
 });
 
 // On trackAdd send track title in music channel

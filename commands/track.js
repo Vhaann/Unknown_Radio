@@ -1,4 +1,5 @@
 const { client } = require('../index');
+const trackEmbed = require('../components/trackEmbed');
 
 module.exports = {
 	name: 'track',
@@ -6,7 +7,6 @@ module.exports = {
 	async execute(message) {
 		const track = await client.player.nowPlaying(message);
 
-		console.log(track);
-		// message.channel.send(queue);
+		message.channel.send(trackEmbed(track, message));
 	},
 };
