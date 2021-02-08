@@ -13,6 +13,7 @@
     "@discordjs/opus": "0.3.3",
     "@types/node": "^14.14.22",
     "canvas": "^2.6.1",
+    "discord-music-player": "^6.4.1",
     "discord-player": "^3.2.1",
     "discord-ytdl-core": "^5.0.0",
     "discord.js": "github:hydrabolt/discord.js",
