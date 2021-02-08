@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = (track, message) => {
 	const trackEmbed = new Discord.MessageEmbed()
-		.setAuthor(track.title)
+		.setAuthor('Unknow Radio Playing')
 		.setColor(0X1ED760)
 		.setThumbnail(track.thumbnail)
 		.addField('Song Name', track.title, true)
