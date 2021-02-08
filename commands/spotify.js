@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const SpotifyIcon = require('../src/svg/spotify-brands.svg');
 
 module.exports = {
 	name: 'spotify',
@@ -22,7 +23,7 @@ module.exports = {
 
 			// Create Embed MessageText
 			const spotifyEmbed = new Discord.MessageEmbed()
-				.setAuthor('Spotify Track', 'https://cdn.discordapp.com/emojis/40866371039682560.png')
+				.setAuthor('Spotify Track', '')
 				.setColor(0X1ED760)
 				.setThumbnail(trackIMG)
 				// Add Fields, true signify it can be on the same line as another field
