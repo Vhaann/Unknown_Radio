@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = (track, message) => {
-	const trackEmbed = new Discord.MessageEmbed()
+	return new Discord.MessageEmbed()
 		.setAuthor('Unknow Radio Playing')
 		.setColor(0X1ED760)
 		.setThumbnail(track.thumbnail)
@@ -10,7 +10,5 @@ module.exports = (track, message) => {
 		.addField('Listen on Youtube', track.url)
 		.setFooter(track.requestedBy.username, message.author.displayAvatarURL())
 		.setTimestamp();
-
-	return trackEmbed;
 };
 

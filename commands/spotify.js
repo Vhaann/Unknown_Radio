@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { client } = require('../index');
 
 module.exports = {
 	name: 'spotify',
@@ -35,8 +36,26 @@ module.exports = {
 				.setFooter(message.member.displayName, message.author.displayAvatarURL())
 				.setTimestamp();
 
-			message.channel.send(spotifyEmbed);
-			console.log(user.presence.activities);
+			message.channel.send(spotifyEmbed).then( async embedMessage => {
+				await embedMessage.react('⏯️')
+				await embedMessage.react('❤️')
+
+				const filter = ( reaction, user ) => {
+					return ['⏯️','❤️'].includes(reaction.emoji.name);
+				}
+
+				const collector = embedMessage.createReactionCollector(filter, { time: 100000 });
+
+				collector.on('collect', reaction => {
+					if(reaction.emoji.name === '⏯️') {
+						client.player.isPlaying(message)
+							? client.player.pause(message)
+							: client.player.play(message, trackURL, true)
+					} else {
+						embedMessage.reply('Added to your Liked Songs')
+					}
+				});
+			})
 		}
 		else {
 			message.channel.send('This user is not listening to Spotify');

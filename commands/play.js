@@ -9,7 +9,5 @@ module.exports = {
 		const parsedArgs = args.toString();
 
 		await client.player.play(message, parsedArgs, true);
-
-		console.log('Track', parsedArgs);
 	},
 };

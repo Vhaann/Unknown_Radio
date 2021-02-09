@@ -55,12 +55,31 @@ client.once('ready', () => {
 
 // On trackStart send track title in music channel
 client.player.on('trackStart', (message, track) => {
-	console.log(track);
-
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
 
-	channel.send(`Now playing ${track.title}...`);
-	channel.send(trackEmbed(track, message));
+	channel.send(`Now playing ${track.title}`);
+	channel.send(trackEmbed(track, message)).then( async embedMessage => {
+		await embedMessage.react('⏯️')
+		await embedMessage.react('❤️')
+
+		const filter = ( reaction, user ) => {
+			return ['⏯️', '❤️'].includes(reaction.emoji.name) && user.id === message.author.id;
+		}
+
+		const collector = embedMessage.createReactionCollector(filter, { time: 15000 });
+
+		collector.on('collect', (reaction, user) => {
+			if(reaction.emoji.name === '⏯️') {
+				client.player.isPlaying(message)
+					? client.player.pause(message)
+					: client.player.play(message, track.url, true)
+			} else {
+				embedMessage.reply('Added to your Liked Songs')
+			}
+		})
+	});
+
+	console.log(track);
 });
 
 // On trackAdd send track title in music channel
