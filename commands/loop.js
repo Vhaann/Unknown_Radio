@@ -4,7 +4,11 @@ module.exports = {
 	name: 'loop',
 	description: 'Toggle Loop Mode',
 	async execute(message) {
-		if(!client.player.isPlaying(message)) return ;
+		if(!client.player.isPlaying(message)) {
+			message.channel.send('Unknow Radio must be playing in order to toggle loopMode');
+
+			return;
+		}
 
 		if(client.player.getQueue(message).loopMode === false) {
 			await client.player.setLoopMode(message, true);

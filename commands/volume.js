@@ -6,7 +6,11 @@ module.exports = {
 	args: true,
 	usage: '<volumeInPercent>',
 	async execute(message, args) {
-		if(!client.player.isPlaying(message)) return ;
+		if(!client.player.isPlaying(message)) {
+			message.channel.send('Unknow Radio must be playing in order to get the current queue');
+
+			return;
+		}
 
 		await client.player.setVolume(message, args[0]);
 

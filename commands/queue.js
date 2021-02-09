@@ -5,14 +5,22 @@ module.exports = {
 	name: 'queue',
 	description: 'Get client Queue',
 	async execute(message) {
+		if(!client.player.isPlaying(message)) {
+			message.channel.send('Unknow Radio must be playing in order to get the current queue');
+
+			return;
+		}
+
 		const queue = await client.player.getQueue(message);
 
-		queue.tracks.map(track => {
-			return track.title;
+		const trackTitles = [];
+
+		queue.previousTracks.map(track => {
+			trackTitles.push(track.title);
 		});
 
-		const trackTitles = queue.tracks.map(track => {
-			return track.title;
+		queue.tracks.map(track => {
+			trackTitles.push(track.title);
 		});
 
 		const queueEmbed = new Discord.MessageEmbed()

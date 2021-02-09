@@ -5,6 +5,12 @@ module.exports = {
 	name: 'lyrics',
 	description: 'Get track Lyrics',
 	async execute(message) {
+		if(!client.player.isPlaying(message)) {
+			message.channel.send('Unknow Radio must be playing in order to get the lyrics');
+
+			return;
+		}
+
 		const track = await client.player.nowPlaying(message);
 		const regex = /[^\-]+$/;
 
