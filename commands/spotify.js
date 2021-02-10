@@ -44,7 +44,7 @@ module.exports = {
 					return ['⏯️','❤️'].includes(reaction.emoji.name);
 				}
 
-				const collector = embedMessage.createReactionCollector(filter, { time: 99999999 });
+				const collector = embedMessage.createReactionCollector(filter);
 
 				collector.on('collect', reaction => {
 					if(reaction.emoji.name === '⏯️') {
