@@ -44,11 +44,11 @@ module.exports = {
 					return ['⏯️','❤️'].includes(reaction.emoji.name);
 				}
 
-				const collector = embedMessage.createReactionCollector(filter, { time: 100000 });
+				const collector = embedMessage.createReactionCollector(filter, { time: 99999999 });
 
 				collector.on('collect', reaction => {
 					if(reaction.emoji.name === '⏯️') {
-						client.player.isPlaying(message)
+						client.player.isPlaying(message) && client.player.nowPlaying(message).url === trackURL
 							? client.player.pause(message)
 							: client.player.play(message, trackURL, true)
 					} else {
