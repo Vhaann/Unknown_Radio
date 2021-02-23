@@ -57,7 +57,6 @@ client.once('ready', () => {
 client.player.on('trackStart', (message, track) => {
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'music');
 
-	channel.send(`Now playing ${track.title}`);
 	channel.send(trackEmbed(track, message)).then( async embedMessage => {
 		await embedMessage.react('⏯️')
 		await embedMessage.react('🔁')
