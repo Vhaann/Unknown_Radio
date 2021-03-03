@@ -13,8 +13,11 @@ const { prefix, token } = require('./config.json');
 // other imports
 const trackEmbed = require('./components/trackEmbed');
 
+// Provide all intents to client
+const intents = new Discord.Intents.ALL();
+
 // create a new Discord client
-const client = new Discord.Client();
+const client = new Discord.Client({ intents });
 
 // Create a new Player (you don't need any API Key)
 const player = new Player(client);
