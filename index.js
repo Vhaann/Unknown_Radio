@@ -14,7 +14,7 @@ const { prefix, token } = require('./config.json');
 const trackEmbed = require('./components/trackEmbed');
 
 // Provide all intents to client
-const intents = new Discord.Intents.ALL();
+const intents = new Discord.Intents.ALL;
 
 // create a new Discord client
 const client = new Discord.Client({ intents });
