@@ -50,7 +50,7 @@ client.once('ready', () => {
 			type: 'LISTENING',
 		},
 		status: 'online',
-	}).then(botPresence => console.log('My Bot:', botPresence));
+	}).then(() => {});
 });
 
 // On trackStart send track title in music channel
