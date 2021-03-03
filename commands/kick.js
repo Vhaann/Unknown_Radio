@@ -8,12 +8,16 @@ module.exports = {
 
 		const taggedUser = message.mentions.users.first();
 
-		taggedUser.kick({
-			reason: 'il é pd',
-		}).then(() => {
-			console.log(`Kicked ${taggedUser.displayName}`);
-			message.channel.send(`Tu sors ${taggedUser.username}`);
-		});
+		if (taggedUser) {
+			const member = message.guild.members.resolve(taggedUser);
+
+			member.kick({
+				reason: 'il é pd',
+			}, taggedUser).then(() => {
+				console.log(`Kicked ${taggedUser.displayName}`);
+				message.channel.send(`Tu sors ${taggedUser.username}`);
+			});
+		}
 	},
 };
 
