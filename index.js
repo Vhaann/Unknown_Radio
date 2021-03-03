@@ -53,7 +53,7 @@ client.once('ready', () => {
 			type: 'LISTENING',
 		},
 		status: 'online',
-	}).then(() => {});
+	});
 });
 
 // On trackStart send track title in music channel
